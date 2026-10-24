@@ -1,24 +1,26 @@
 
+import { useTranslation } from "react-i18next";
 import "./Education.css";
 
 export default function Education() {
+  const { t } = useTranslation();
+
   return (
     <section id="education" className="education-section">
       <div className="education-inner">
         <header className="education-header">
           <span className="education-eyebrow">
             <span className="education-eyebrow-dot" />
-            04 / BACKGROUND
+            {t("educationPage.eyebrow")}
           </span>
 
           <h2>
-            Education <span>&</span> Languages
+            {t("educationPage.headingEducation")}{" "}
+            <span>{t("educationPage.headingConnector")}</span>{" "}
+            {t("educationPage.headingLanguages")}
           </h2>
 
-          <p>
-            My academic journey and the languages I use to
-            connect, collaborate, and learn.
-          </p>
+          <p>{t("educationPage.intro")}</p>
         </header>
 
         <div className="education-layout">
@@ -26,7 +28,7 @@ export default function Education() {
           <div className="education-column">
             <h3 className="education-column-title">
               <span className="education-index">01</span>
-              Education
+              {t("educationPage.educationColumnTitle")}
             </h3>
 
             <div className="education-timeline">
@@ -35,24 +37,23 @@ export default function Education() {
 
                 <div className="education-item-top">
                   <span className="education-date">
-                    2026 — Present
+                    {t("educationPage.masterDate")}
                   </span>
+
                   <span className="education-status">
                     <span />
-                    In progress
+                    {t("educationPage.masterStatus")}
                   </span>
                 </div>
 
-                <h4>
-                  M.Sc. Integrated Water Resources Management
-                </h4>
+                <h4>{t("educationPage.masterProgram")}</h4>
 
                 <p className="education-institution">
-                  TH Köln — Technology Arts Sciences
+                  {t("educationPage.masterInstitution")}
                 </p>
 
                 <span className="education-degree-type">
-                  Master’s degree
+                  {t("educationPage.masterDegree")}
                 </span>
               </article>
 
@@ -61,18 +62,18 @@ export default function Education() {
 
                 <div className="education-item-top">
                   <span className="education-date">
-                    2014 — 2018
+                    {t("educationPage.bachelorDate")}
                   </span>
                 </div>
 
-                <h4>B.Eng. Civil Engineering</h4>
+                <h4>{t("educationPage.bachelorProgram")}</h4>
 
                 <p className="education-institution">
-                  Yazd University, Iran
+                  {t("educationPage.bachelorInstitution")}
                 </p>
 
                 <span className="education-degree-type">
-                  Bachelor’s degree
+                  {t("educationPage.bachelorDegree")}
                 </span>
               </article>
             </div>
@@ -82,7 +83,7 @@ export default function Education() {
           <div className="languages-column">
             <h3 className="education-column-title">
               <span className="education-index">02</span>
-              Languages
+              {t("educationPage.languagesColumnTitle")}
             </h3>
 
             <div className="languages-panel">
@@ -90,12 +91,12 @@ export default function Education() {
                 <div className="language-symbol">فا</div>
 
                 <div className="language-info">
-                  <h4>Persian</h4>
-                  <p>Native language</p>
+                  <h4>{t("educationPage.persianName")}</h4>
+                  <p>{t("educationPage.persianDescription")}</p>
                 </div>
 
                 <span className="language-level">
-                  Native
+                  {t("educationPage.nativeLevel")}
                 </span>
               </div>
 
@@ -103,34 +104,28 @@ export default function Education() {
                 <div className="language-symbol">EN</div>
 
                 <div className="language-info">
-                  <h4>English</h4>
-                  <p>IELTS certification</p>
+                  <h4>{t("educationPage.englishName")}</h4>
+                  <p>{t("educationPage.englishDescription")}</p>
                 </div>
 
-                <span className="language-level">
-                  7.0
-                </span>
+                <span className="language-level">7.0</span>
               </div>
 
               <div className="language-item">
                 <div className="language-symbol">DE</div>
 
                 <div className="language-info">
-                  <h4>German</h4>
-                  <p>Language proficiency</p>
+                  <h4>{t("educationPage.germanName")}</h4>
+                  <p>{t("educationPage.germanDescription")}</p>
                 </div>
 
-                <span className="language-level">
-                  B2
-                </span>
+                <span className="language-level">B2</span>
               </div>
             </div>
 
             <div className="languages-note">
               <span className="languages-note-mark">+</span>
-              <p>
-                Always learning. Always improving.
-              </p>
+              <p>{t("educationPage.learningNote")}</p>
             </div>
           </div>
         </div>

@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import {
   useEffect,
   useRef,
@@ -10,6 +11,7 @@ type CursorPosition = {
 };
 import Contact from "./Contact";
 import Education from "./Education";
+import LanguageSwitcher from "./LanguageSwitcher";
 // A custom blinking cursor that follows the mouse
 function CodeCursor() {
   const [position, setPosition] = useState<CursorPosition>({
@@ -238,17 +240,7 @@ const skillProjectMap: Record<string, string[]> = {
   WPF: [],
   Linux: [],
 };
-const codeLines = [
-  { number: "01", text: "const developer = {", tone: "purple" },
-  { number: "02", text: '  name: "Pooriya Poorooshasb",', tone: "green" },
-  { number: "03", text: '  role: "Full-Stack Developer",', tone: "green" },
-  { number: "04", text: '  experience: "9+ years",', tone: "blue" },
-  { number: "05", text: '  backend: ["C#", "ASP.NET Core"],', tone: "blue" },
-  { number: "06", text: '  frontend: ["React", "TypeScript"],', tone: "blue" },
-  { number: "07", text: '  database: ["SQL Server", "Optimization"],', tone: "blue" },
-  { number: "08", text: '  mindset: "Build. Optimize. Deliver.",', tone: "green" },
-  { number: "09", text: "};", tone: "purple" },
-];
+
 
 type Certificate = {
   id: string;
@@ -291,22 +283,23 @@ const certificates: Certificate[] = [
   },
 ];
 
+
 function Certifications() {
+  const { t } = useTranslation();
+
   return (
     <section className="certifications-section" id="certificates">
       <div className="certifications-heading">
         <span className="certifications-eyebrow">
-          LEARNING & DEVELOPMENT
+          {t("certificatesPage.eyebrow")}
         </span>
 
         <h2>
-          Certificates <span>& Credentials</span>
+          {t("certificatesPage.title")}{" "}
+          <span>{t("certificatesPage.titleAccent")}</span>
         </h2>
 
-        <p>
-          Professional certifications and continuous learning
-          that support my work in software development and data.
-        </p>
+        <p>{t("certificatesPage.description")}</p>
       </div>
 
       <div className="certifications-grid">
@@ -321,7 +314,7 @@ function Certifications() {
 
               <div className="floppy-label">
                 <div className="floppy-label-top">
-                  <span>COURSERA / CREDENTIAL</span>
+                  <span>{t("certificatesPage.issuerLabel")}</span>
                   <span className="floppy-label-mark">G</span>
                 </div>
 
@@ -335,10 +328,12 @@ function Certifications() {
                   <div
                     className="floppy-certificate-preview"
                     role="img"
-                    aria-label={`Illustrated preview of ${certificate.title}`}
+                    aria-label={`${t(
+                      "certificatesPage.professionalCertificate"
+                    )}: ${certificate.title}`}
                   >
                     <span className="floppy-preview-eyebrow">
-                      PROFESSIONAL CERTIFICATE
+                      {t("certificatesPage.professionalCertificate")}
                     </span>
 
                     <div className="floppy-preview-title">
@@ -349,7 +344,7 @@ function Certifications() {
                     <div className="floppy-preview-rule" />
 
                     <div className="floppy-preview-footer">
-                      <span>DATA · ANALYSIS · VISUALIZATION</span>
+                      <span>{t("certificatesPage.previewFooter")}</span>
                       <span className="floppy-preview-seal">DA</span>
                     </div>
                   </div>
@@ -357,27 +352,27 @@ function Certifications() {
 
                 <div className="floppy-label-bottom">
                   <div className="floppy-earned">
-                    <span>DATE EARNED</span>
+                    <span>{t("certificatesPage.dateEarned")}</span>
                     <strong>{certificate.year}</strong>
                   </div>
 
-                 <div className="floppy-verify-slot">
-  {certificate.credentialUrl ? (
-    <a
-      className="floppy-verify"
-      href={certificate.credentialUrl}
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      Validate credential ↗
-    </a>
-  ) : (
-    <span
-      className="floppy-verify-placeholder"
-      aria-hidden="true"
-    />
-  )}
-</div>
+                  <div className="floppy-verify-slot">
+                    {certificate.credentialUrl ? (
+                      <a
+                        className="floppy-verify"
+                        href={certificate.credentialUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {t("certificatesPage.validateCredential")} ↗
+                      </a>
+                    ) : (
+                      <span
+                        className="floppy-verify-placeholder"
+                        aria-hidden="true"
+                      />
+                    )}
+                  </div>
                 </div>
               </div>
 
@@ -387,43 +382,46 @@ function Certifications() {
             </div>
 
             {/* Credential details */}
-            
-{certificate.courses.length > 0 && (
-  <details className="certification-details">
-    <summary>
-      <span className="certification-summary-title">
-        Included courses
-      </span>
+            {certificate.courses.length > 0 && (
+              <details className="certification-details">
+                <summary>
+                  <span className="certification-summary-title">
+                    {t("certificatesPage.includedCourses")}
+                  </span>
 
-      <span className="certification-course-count">
-        {certificate.courses.length} COURSES
-      </span>
+                  <span className="certification-course-count">
+                    {certificate.courses.length}{" "}
+                    {t("certificatesPage.coursesCount")}
+                  </span>
 
-      <span className="certification-chevron" aria-hidden="true">
-        +
-      </span>
-    </summary>
+                  <span
+                    className="certification-chevron"
+                    aria-hidden="true"
+                  >
+                    +
+                  </span>
+                </summary>
 
-    <ul className="certification-courses">
-      {certificate.courses.map((course, index) => (
-        <li key={course}>
-          <span className="course-number">
-            {String(index + 1).padStart(2, "0")}
-          </span>
+                <ul className="certification-courses">
+                  {certificate.courses.map((course, index) => (
+                    <li key={course}>
+                      <span className="course-number">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
 
-          <span className="course-name">{course}</span>
-        </li>
-      ))}
-    </ul>
-  </details>
-)}
-
+                      <span className="course-name">{course}</span>
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            )}
           </article>
         ))}
       </div>
     </section>
   );
 }
+
 
 type WorkExperience = {
   id: string;
@@ -601,6 +599,48 @@ function WorkExperience() {
 
 
 function App() {
+  const { t } = useTranslation();
+
+  const codeLines = [
+    { number: "01", text: "const developer = {", tone: "purple" },
+    {
+      number: "02",
+      text: '  name: "Pooriya Poorooshasb",',
+      tone: "green",
+    },
+    {
+      number: "03",
+      text: `  role: "${t("hero.role")}",`,
+      tone: "green",
+    },
+    {
+      number: "04",
+      text: `  experience: "${t("hero.codeExperience")}",`,
+      tone: "blue",
+    },
+    {
+      number: "05",
+      text: '  backend: ["C#", "ASP.NET Core"],',
+      tone: "blue",
+    },
+    {
+      number: "06",
+      text: '  frontend: ["React", "TypeScript"],',
+      tone: "blue",
+    },
+    {
+      number: "07",
+      text: `  database: ["SQL Server", "${t("hero.codeOptimization")}"],`,
+      tone: "blue",
+    },
+    {
+      number: "08",
+      text: `  mindset: "${t("hero.codeMindset")}",`,
+      tone: "green",
+    },
+    { number: "09", text: "};", tone: "purple" },
+  ];
+
   const [activeSkill, setActiveSkill] = useState<string | null>(null);
 const [displayedSkill, setDisplayedSkill] = useState<string | null>(null);
 
@@ -688,14 +728,21 @@ const activeProjects = displayedSkill
           </span>
         </a>
 
-        <nav className="navigation" aria-label="Main navigation">
-          <a href="#about">About</a>
-          <a href="#stack">Tech Stack</a>
-          <a href="#projects">Projects</a>
-          <a className="nav-contact" href="#contact">
-            Let&apos;s talk <span aria-hidden="true">↗</span>
-          </a>
-        </nav>
+        
+
+<nav className="navigation" aria-label="Main navigation">
+  <a href="#about">{t("nav.about")}</a>
+  <a href="#stack">{t("nav.skills")}</a>
+  <a href="#projects">{t("nav.projects")}</a>
+
+  <a className="nav-contact" href="#contact">
+    {t("nav.contact")} <span aria-hidden="true">↗</span>
+  </a>
+
+  <LanguageSwitcher />
+</nav>
+
+
       </header>
 
       <main>
@@ -723,8 +770,8 @@ const activeProjects = displayedSkill
 
       <span
         className="avatar-status"
-        title="Software Developer"
-        aria-label="Software Developer"
+        title={t("hero.avatarStatus")}
+aria-label={t("hero.avatarStatus")}
       />
     </div>
 
@@ -752,21 +799,21 @@ const activeProjects = displayedSkill
         </p>
 
         <p className="profile-output-label">
-          PROFILE LOADED SUCCESSFULLY
-        </p>
+  {t("hero.status")}
+</p>
 
         <h1 className="profile-name">
           Pooriya Poorooshasb
         </h1>
 
-        <p className="profile-role">
-          Full-Stack Developer
-          <span className="profile-role-caret" aria-hidden="true" />
-        </p>
+<p className="profile-role">
+  {t("hero.role")}
+  <span className="profile-role-caret" aria-hidden="true" />
+</p>
 
-        <p className="profile-description">
-          I'm Pooriya Poorooshasb, a Full-Stack Developer with 9 years of professional experience building web applications, Windows desktop software, and data-driven solutions. I specialize in the .NET ecosystem, modern frontend technologies, and SQL database design and optimization. I work with both freelance clients and full-time teams to turn complex requirements into reliable, maintainable software.
-        </p>
+<p className="profile-description">
+  {t("hero.description")}
+</p>
 
         <div className="profile-experience">
           <span className="experience-icon" aria-hidden="true">
@@ -774,8 +821,8 @@ const activeProjects = displayedSkill
           </span>
 
           <span className="experience-copy">
-            <strong>9 years</strong>
-            <small>of software development experience</small>
+            <strong>{t("hero.experienceYears")}</strong>
+<small>{t("hero.experienceCaption")}</small>
           </span>
         </div>
 
@@ -800,13 +847,15 @@ const activeProjects = displayedSkill
   </p>
 
   <div className="profile-contact-heading">
-    <span>AVAILABLE CHANNELS</span>
-    <span className="profile-contact-count">04 LINKS</span>
+<span>{t("hero.contactChannels")}</span>
+<span className="profile-contact-count">
+  {t("hero.contactCount")}
+</span>
   </div>
 
   <nav
     className="profile-social-links"
-    aria-label="Contact and professional profiles"
+    aria-label={t("hero.profileLinksAria")}
   >
     {profileLinks.map((link) => (
       <a
@@ -815,7 +864,10 @@ const activeProjects = displayedSkill
         href={link.url}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label={`${link.name}: ${link.handle} (opens in a new tab)`}
+        aria-label={t("hero.profileLinkAria", {
+  name: link.name,
+  handle: link.handle,
+})}
       >
         <span
           className={`profile-social-icon profile-social-icon--${link.id}`}
@@ -841,8 +893,8 @@ const activeProjects = displayedSkill
 
       <div className="profile-terminal-footer">
         <span>
-          <span className="status-dot" />
-          PROFILE.EXE — RUNNING
+         <span className="status-dot" />
+{t("hero.profileFooter")}
         </span>
         <span>UTF-8</span>
       </div>
@@ -851,11 +903,11 @@ const activeProjects = displayedSkill
 
   <div className="hero-actions">
     <a className="button button-primary" href="#projects">
-      Explore my work <span aria-hidden="true">↗</span>
+      {t("hero.exploreButton")} <span aria-hidden="true">↗</span>
     </a>
 
     <a className="button button-secondary" href="#contact">
-      Get in touch
+      {t("hero.getInTouchButton")}
     </a>
   </div>
 </div>
@@ -895,7 +947,7 @@ const activeProjects = displayedSkill
                 <div className="terminal-footer">
                   <span className="terminal-status">
                     <span className="status-dot" />
-                    READY TO BUILD
+                    {t("hero.terminalReady")}
                   </span>
                   <span className="terminal-encoding">UTF-8</span>
                 </div>
@@ -905,16 +957,16 @@ const activeProjects = displayedSkill
             <div className="floating-label label-top">
               <span className="label-icon">{`{ }`}</span>
               <span>
-                <strong>Clean code</strong>
-                <small>Built with purpose</small>
+                <strong>{t("hero.cleanCode")}</strong>
+                <small>{t("hero.builtWithPurpose")}</small>
               </span>
             </div>
 
             <div className="floating-label label-bottom">
               <span className="label-icon label-icon-alt">↗</span>
               <span>
-                <strong>Always learning</strong>
-                <small>Improving every day</small>
+                <strong>{t("hero.alwaysLearning")}</strong>
+<small>{t("hero.improvingEveryDay")}</small>
               </span>
             </div>
           </div>
@@ -924,19 +976,21 @@ const activeProjects = displayedSkill
   <div className="skills-heading">
     <div>
       <p className="eyebrow">
-        <span className="status-dot" />
-        TECHNICAL PROFICIENCIES
-      </p>
+  <span className="status-dot" />
+  {t("skillsPage.eyebrow")}
+</p>
 
       <h2>
-        My <span className="accent-text">Skills.</span>
-      </h2>
+  {t("skillsPage.title")}{" "}
+  <span className="accent-text">
+    {t("skillsPage.titleAccent")}
+  </span>
+</h2>
     </div>
 
     <p className="skills-intro">
-      Explore my technical skills and discover the public projects
-      associated with each technology.
-    </p>
+  {t("skillsPage.intro")}
+</p>
   </div>
 
   <div className="skills-workspace">
@@ -959,16 +1013,16 @@ const activeProjects = displayedSkill
             ▣
           </span>
 
-          <span>Computer</span>
+          <span>{t("skillsPage.computer")}</span>
         </div>
 
         <p className="explorer-minimized-title">
-          PROJECT EXPLORER
-        </p>
+  {t("skillsPage.explorerTitle")}
+</p>
 
         <p className="explorer-hint">
-          Hover over a skill to discover its related projects.
-        </p>
+  {t("skillsPage.explorerHint")}
+</p>
       </div>
 
       <div
@@ -992,8 +1046,8 @@ const activeProjects = displayedSkill
           </span>
 
           <span className="explorer-window-title">
-            File Explorer
-          </span>
+  {t("skillsPage.fileExplorer")}
+</span>
 
           <div className="explorer-window-controls" aria-hidden="true">
             <span>−</span>
@@ -1012,31 +1066,34 @@ const activeProjects = displayedSkill
             <span>›</span>
             <span>Projects</span>
             <span>›</span>
-            <strong>{displayedSkill ?? "Select a skill"}</strong>
+            <strong>
+  {displayedSkill ?? t("skillsPage.selectSkill")}
+</strong>
           </div>
         </div>
 
         <div className="explorer-content">
           <div className="explorer-sidebar">
-            <p>QUICK ACCESS</p>
-            <span>⌂ Home</span>
-            <span>▤ Desktop</span>
-            <span>▧ Documents</span>
-            <span>▣ Downloads</span>
+            <p>{t("skillsPage.quickAccess")}</p>
+<span>⌂ {t("skillsPage.home")}</span>
+<span>▤ {t("skillsPage.desktop")}</span>
+<span>▧ {t("skillsPage.documents")}</span>
+<span>▣ {t("skillsPage.downloads")}</span>
 
-            <div className="explorer-sidebar-divider" />
+<div className="explorer-sidebar-divider" />
 
-            <span className="explorer-sidebar-selected">
-              ▣ This PC
-            </span>
-            <span>▰ Projects</span>
+<span className="explorer-sidebar-selected">
+  ▣ {t("skillsPage.thisPc")}
+</span>
+
+<span>▰ {t("skillsPage.projects")}</span>
           </div>
 
           <div className="explorer-files">
             <div className="explorer-files-heading">
-              <span>NAME</span>
-              <span>TYPE</span>
-            </div>
+  <span>{t("skillsPage.nameColumn")}</span>
+  <span>{t("skillsPage.typeColumn")}</span>
+</div>
 
             {activeProjects.length > 0 ? (
               activeProjects.map((project) => (
@@ -1046,7 +1103,9 @@ const activeProjects = displayedSkill
                   href={project.url}
                   target="_blank"
                   rel="noreferrer"
-                  title={`Open ${project.name}`}
+                  title={t("skillsPage.openProjectTitle", {
+  name: project.name,
+})}
                   tabIndex={activeSkill ? 0 : -1}
                 >
                   <span className="project-folder-icon" aria-hidden="true">
@@ -1058,8 +1117,8 @@ const activeProjects = displayedSkill
                   </span>
 
                   <span className="project-folder-type">
-                    LINK
-                  </span>
+  {t("skillsPage.linkType")}
+</span>
                 </a>
               ))
             ) : (
@@ -1068,11 +1127,9 @@ const activeProjects = displayedSkill
                   📂
                 </span>
 
-                <strong>No linked project yet</strong>
+                <strong>{t("skillsPage.noLinkedProject")}</strong>
 
-                <p>
-                  No public project has been linked to this skill.
-                </p>
+                <p>{t("skillsPage.noPublicProject")}</p>
               </div>
             )}
           </div>
@@ -1080,14 +1137,16 @@ const activeProjects = displayedSkill
 
         <div className="explorer-statusbar">
           <span>
-            {activeProjects.length} item
-            {activeProjects.length === 1 ? "" : "s"}
-          </span>
+  {activeProjects.length}{" "}
+  {activeProjects.length === 1
+    ? t("skillsPage.item")
+    : t("skillsPage.items")}
+</span>
 
           <span>
-            <span className="status-dot" />
-            Ready
-          </span>
+  <span className="status-dot" />
+  {t("skillsPage.ready")}
+</span>
         </div>
       </div>
     </aside>
@@ -1101,7 +1160,10 @@ const activeProjects = displayedSkill
           }`}
           key={skill.name}
           tabIndex={0}
-          aria-label={`${skill.name}: ${skill.level}% self-assessed proficiency`}
+          aria-label={t("skillsPage.skillAriaLabel", {
+  name: skill.name,
+  level: skill.level,
+})}
           aria-expanded={activeSkill === skill.name}
           style={
             {
@@ -1129,27 +1191,29 @@ const activeProjects = displayedSkill
     </div>
   </div>
 
-  <p className="skills-footnote">
-    Proficiency levels are self-assessed.
-  </p>
+<p className="skills-footnote">
+  {t("skillsPage.proficiencyFootnote")}
+</p>
 </section>
 <section className="experience-section" id="experience">
   <div className="experience-heading">
     <div>
       <p className="eyebrow">
-        <span className="status-dot" />
-        CAREER HISTORY
-      </p>
+  <span className="status-dot" />
+  {t("workExperience.eyebrow")}
+</p>
 
       <h2>
-        Work <span className="accent-text">Experience.</span>
-      </h2>
+  {t("workExperience.title")}
+  <span className="accent-text">
+    {t("workExperience.titleAccent")}
+  </span>
+</h2>
     </div>
 
     <p className="experience-intro">
-      Nine years of building software, solving technical challenges,
-      and developing reliable applications.
-    </p>
+  {t("workExperience.intro")}
+</p>
   </div>
 
   <div className="experience-list">
@@ -1170,7 +1234,9 @@ const activeProjects = displayedSkill
               {experience.period}
             </span>
 
-            <h3>{experience.role}</h3>
+            <h3>
+  {t(`workExperience.jobs.${experience.id}.role`)}
+</h3>
 
             <p className="experience-company">
               {experience.company}
@@ -1186,7 +1252,7 @@ const activeProjects = displayedSkill
           <div className="experience-meta">
             <span className="experience-employment">
               <span className="status-dot" />
-              {experience.employmentType}
+              {t(`workExperience.jobs.${experience.id}.employmentType`)}
             </span>
 
             <span className="experience-focus">
@@ -1195,36 +1261,38 @@ const activeProjects = displayedSkill
           </div>
 
           <p className="experience-summary">
-            {experience.summary}
-          </p>
+  {t(`workExperience.jobs.${experience.id}.summary`)}
+</p>
 
           <ul className="experience-responsibilities">
-            {experience.responsibilities.map((item) => (
-              <li key={item}>
-                <span
-                  className="responsibility-marker"
-                  aria-hidden="true"
-                >
-                  →
-                </span>
-
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
+  {(
+    t(`workExperience.jobs.${experience.id}.responsibilities`, {
+      returnObjects: true,
+    }) as string[]
+  ).map((item) => (
+    <li key={item}>
+      <span className="responsibility-marker" aria-hidden="true">
+        →
+      </span>
+      <span>{item}</span>
+    </li>
+  ))}
+</ul>
 
           <div className="experience-tech-area">
             <p className="experience-tech-label">
-              TECHNOLOGIES
-            </p>
+  {t("workExperience.technologyLabel")}
+</p>
 
             <div className="experience-tech-list">
-              {experience.technologies.map((technology) => (
-                <span key={technology}>
-                  {technology}
-                </span>
-              ))}
-            </div>
+  {(
+    t(`workExperience.jobs.${experience.id}.technologies`, {
+      returnObjects: true,
+    }) as string[]
+  ).map((technology) => (
+    <span key={technology}>{technology}</span>
+  ))}
+</div>
           </div>
         </div>
       </article>
@@ -1238,19 +1306,22 @@ const activeProjects = displayedSkill
   <div className="projects-heading">
     <div>
       <p className="eyebrow">
-        <span className="status-dot" />
-        SELECTED WORK
-      </p>
+  <span className="status-dot" />
+  {t("projects.publicSection.eyebrow")}
+</p>
 
       <h2>
-        My Public <span className="accent-text">Projects.</span>
-      </h2>
+  {t("projects.publicSection.title")}{" "}
+  <span className="accent-text">
+    {t("projects.publicSection.titleAccent")}
+  </span>
+</h2>
+
     </div>
 
     <p className="projects-intro">
-      A selection of projects focused on useful software,
-      practical solutions, and real-world applications.
-    </p>
+  {t("projects.publicSection.intro")}
+</p>
   </div>
 
   <div className="projects-grid">
@@ -1262,7 +1333,7 @@ const activeProjects = displayedSkill
           </span>
 
           <span className="project-category">
-            {project.category}
+            {t(`projects.public.${project.id}.category`)}
           </span>
         </div>
 
@@ -1276,14 +1347,18 @@ const activeProjects = displayedSkill
         <h3>{project.name}</h3>
 
         <p className="project-description">
-          {project.description}
+          {t(`projects.public.${project.id}.description`)}
         </p>
 
         <div className="project-tags">
-          {project.tags.map((tag) => (
-            <span key={tag}>{tag}</span>
-          ))}
-        </div>
+  {(
+    t(`projects.public.${project.id}.tags`, {
+      returnObjects: true,
+    }) as string[]
+  ).map((tag) => (
+    <span key={tag}>{tag}</span>
+  ))}
+</div>
 
         <a
           className="project-link"
@@ -1291,7 +1366,7 @@ const activeProjects = displayedSkill
           target="_blank"
           rel="noreferrer"
         >
-          {project.linkLabel}
+          {t(`projects.public.${project.id}.linkLabel`)}
           <span aria-hidden="true">↗</span>
         </a>
       </article>
@@ -1303,19 +1378,15 @@ const activeProjects = displayedSkill
 >
   <div className="private-projects-heading">
     <span className="private-projects-eyebrow">
-      PROFESSIONAL EXPERIENCE
-    </span>
+    {t("projects.professionalSection.eyebrow")}
+  </span>
 
     <h2 id="private-projects-title">
-      Professional Case Studies
-    </h2>
+    {t("projects.professionalSection.title")}{" "}
+    <span>{t("projects.professionalSection.titleAccent")}</span>
+  </h2>
 
-    <p>
-      Selected projects developed in professional environments.
-      Some applications have restricted access or are not publicly
-      available, so these case studies focus on my contributions,
-      technical decisions, and implementation.
-    </p>
+    <p>{t("projects.professionalSection.intro")}</p>
   </div>
 
   <div className="projects-grid">
@@ -1330,8 +1401,8 @@ const activeProjects = displayedSkill
           </span>
 
           <span className="project-category">
-            {project.category}
-          </span>
+  {t(`projects.professional.${project.id}.category`)}
+</span>
         </div>
 
         <div className="project-card-icon" aria-hidden="true">
@@ -1344,19 +1415,23 @@ const activeProjects = displayedSkill
         <h3>{project.name}</h3>
 
         <p className="project-description">
-          {project.description}
-        </p>
+  {t(`projects.professional.${project.id}.description`)}
+</p>
 
-        <div className="case-study-role">
-          <span>MY ROLE</span>
-          <p>{project.role}</p>
-        </div>
+       <div className="case-study-role">
+  <span>{t("projects.professional.roleLabel")}</span>
+  <p>{t(`projects.professional.${project.id}.role`)}</p>
+</div>
 
         <ul className="case-study-highlights">
-          {project.highlights.map((highlight) => (
-            <li key={highlight}>{highlight}</li>
-          ))}
-        </ul>
+  {(
+    t(`projects.professional.${project.id}.highlights`, {
+      returnObjects: true,
+    }) as string[]
+  ).map((highlight) => (
+    <li key={highlight}>{highlight}</li>
+  ))}
+</ul>
 
         <div className="project-tags">
           {project.tags.map((tag) => (
@@ -1366,20 +1441,22 @@ const activeProjects = displayedSkill
 
         <div className="project-access">
           <span className="project-access-label">
-            {project.accessLabel}
-          </span>
+  {t(`projects.professional.${project.id}.accessLabel`)}
+</span>
 
           {project.url && (
-            <a
-              className="project-link"
-              href={project.url}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {project.linkLabel ?? "View project"}
-              <span aria-hidden="true">↗</span>
-            </a>
-          )}
+  <a
+    className="project-link"
+    href={project.url}
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    {t(`projects.professional.${project.id}.linkLabel`, {
+      defaultValue: project.linkLabel ?? "View project",
+    })}
+    <span aria-hidden="true">↗</span>
+  </a>
+)}
         </div>
       </article>
     ))}

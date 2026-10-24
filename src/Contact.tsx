@@ -1,28 +1,31 @@
 
+import { useTranslation } from "react-i18next";
 import "./Contact.css";
 
-const contactLinks = [
-  {
-    id: "email",
-    label: "EMAIL",
-    value: "kpoorooshasb@gmail.com",
-    description: "Send me an email. I'll get back to you as soon as possible.",
-    href: "mailto:kpoorooshasb@gmail.com",
-    icon: "✉",
-    color: "green",
-  },
-  {
-    id: "telegram",
-    label: "TELEGRAM",
-    value: "@p_shsb",
-    description: "Reach out on Telegram for a quick conversation.",
-    href: "https://t.me/p_shsb",
-    icon: "➤",
-    color: "blue",
-  },
-];
-
 export default function Contact() {
+  const { t } = useTranslation();
+
+  const contactLinks = [
+    {
+      id: "email",
+      label: t("contact.emailLabel"),
+      value: "kpoorooshasb@gmail.com",
+      description: t("contact.emailDescription"),
+      href: "mailto:kpoorooshasb@gmail.com",
+      icon: "✉",
+      color: "green",
+    },
+    {
+      id: "telegram",
+      label: t("contact.telegramLabel"),
+      value: "@p_shsb",
+      description: t("contact.telegramDescription"),
+      href: "https://t.me/p_shsb",
+      icon: "➤",
+      color: "blue",
+    },
+  ];
+
   return (
     <section className="contact-section" id="contact">
       <div className="contact-terminal">
@@ -38,24 +41,24 @@ export default function Contact() {
           </span>
 
           <span className="contact-terminal-status">
-            GET-IN-TOUCH
+            {t("contact.terminalStatus")}
           </span>
         </header>
 
         <div className="contact-content">
           <div className="contact-main">
             <p className="contact-command">
-              <span>PS&gt;</span> Get-Contact
+              <span>PS&gt;</span>{" "}
+              {t("contact.command")}
             </p>
 
             <h2 className="contact-title">
-              Let's Connect<span className="contact-cursor" />
+              {t("contact.title")}
+              <span className="contact-cursor" />
             </h2>
 
             <p className="contact-intro">
-              I'm always open to new opportunities, interesting
-              projects, and meaningful conversations. Feel free
-              to reach out through the channels below.
+              {t("contact.description")}
             </p>
 
             <div className="contact-links">
@@ -71,7 +74,10 @@ export default function Contact() {
                       : undefined
                   }
                 >
-                  <span className="contact-link-icon" aria-hidden="true">
+                  <span
+                    className="contact-link-icon"
+                    aria-hidden="true"
+                  >
                     {link.icon}
                   </span>
 
@@ -79,15 +85,20 @@ export default function Contact() {
                     <span className="contact-link-label">
                       {link.label}
                     </span>
+
                     <strong className="contact-link-value">
                       {link.value}
                     </strong>
+
                     <span className="contact-link-description">
                       {link.description}
                     </span>
                   </span>
 
-                  <span className="contact-link-arrow" aria-hidden="true">
+                  <span
+                    className="contact-link-arrow"
+                    aria-hidden="true"
+                  >
                     ↗
                   </span>
                 </a>
@@ -95,57 +106,80 @@ export default function Contact() {
             </div>
           </div>
 
-          <div className="contact-visual" aria-label="Developer terminal illustration">
+          <div
+            className="contact-visual"
+            aria-label={t("contact.visualLabel")}
+          >
             <div className="contact-code-window">
               <div className="contact-code-header">
-                <div className="contact-window-dots" aria-hidden="true">
+                <div
+                  className="contact-window-dots"
+                  aria-hidden="true"
+                >
                   <span />
                   <span />
                   <span />
                 </div>
+
                 <span>contact.json</span>
               </div>
 
               <pre className="contact-code">
                 <span className="code-muted">{"{"}</span>{"\n"}
-                {"  "}<span className="code-key">"status"</span>:{" "}
-                <span className="code-string">"available"</span>,{"\n"}
-                {"  "}<span className="code-key">"email"</span>:{" "}
+                {"  "}
+                <span className="code-key">"status"</span>:{" "}
+                <span className="code-string">
+                  "{t("contact.jsonStatus")}"
+                </span>
+                ,{"\n"}
+                {"  "}
+                <span className="code-key">"email"</span>:{" "}
                 <span className="code-string">
                   "kpoorooshasb@gmail.com"
                 </span>
                 ,{"\n"}
-                {"  "}<span className="code-key">"telegram"</span>:{" "}
-                <span className="code-string">"@p_shsb"</span>,{"\n"}
-                {"  "}<span className="code-key">"response"</span>:{" "}
-                <span className="code-string">"Looking forward to it!"</span>
+                {"  "}
+                <span className="code-key">"telegram"</span>:{" "}
+                <span className="code-string">"@p_shsb"</span>
+                ,{"\n"}
+                {"  "}
+                <span className="code-key">"response"</span>:{" "}
+                <span className="code-string">
+                  "{t("contact.jsonResponse")}"
+                </span>
                 {"\n"}
                 <span className="code-muted">{"}"}</span>
               </pre>
 
               <div className="contact-code-footer">
                 <span className="contact-live-dot" />
-                CONNECTION_STATUS: READY
+                {t("contact.connectionStatus")}
               </div>
             </div>
 
             <div className="contact-floating-symbol contact-symbol-one">
               {"</>"}
             </div>
+
             <div className="contact-floating-symbol contact-symbol-two">
               {"{ }"}
             </div>
-            <div className="contact-grid-pattern" aria-hidden="true" />
+
+            <div
+              className="contact-grid-pattern"
+              aria-hidden="true"
+            />
           </div>
         </div>
 
         <footer className="contact-terminal-footer">
           <span>
             <span className="contact-live-dot" />
-            Available for new opportunities
+            {t("contact.available")}
           </span>
+
           <span className="contact-footer-message">
-            Let's build something great together <span>↗</span>
+            {t("contact.footer")} <span>↗</span>
           </span>
         </footer>
       </div>
