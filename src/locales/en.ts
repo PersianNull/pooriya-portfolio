@@ -132,6 +132,21 @@ projects: {
         "Machine Learning",
       ],
     },
+    "raahro": {
+  category: "Desktop Application · Network Tool",
+  description:
+    "A Windows desktop application that turns your PC into a proxy-powered Wi-Fi hotspot, allowing you to share a local SOCKS5 proxy connection with other devices through sing-box and Windows Mobile Hotspot.",
+  linkLabel: "View on GitHub",
+  tags: [
+    "WPF",
+    "C#",
+    ".NET",
+    "MVVM",
+    "sing-box",
+    "Proxy",
+    "Hotspot",
+  ],
+},
   },
 
 
@@ -307,6 +322,8 @@ educationPage: {
 },
 
 skillsPage: {
+  privateProjectTitle: "{{name}} is not publicly available",
+privateType: "PRIVATE",
   eyebrow: "TECHNICAL PROFICIENCIES",
   title: "My",
   titleAccent: "Skills.",

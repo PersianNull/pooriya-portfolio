@@ -182,3 +182,11 @@
     border-right-color: var(--border);
   }
 }
+.project-folder--locked {
+  cursor: default;
+  opacity: 0.75;
+}
+
+.project-folder--locked:hover {
+  background: transparent;
+}

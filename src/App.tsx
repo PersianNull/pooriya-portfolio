@@ -73,6 +73,12 @@ type PublicProject = {
   linkLabel: string;
   tags: string[];
 };
+type ExplorerProject = {
+  id: string;
+  name: string;
+  url?: string;
+  isPublic: boolean;
+};
 type ProfessionalCaseStudy = {
   id: string;
   name: string;
@@ -130,6 +136,24 @@ const publicProjects: PublicProject[] = [
     "YOLOv5",
     "Computer Vision",
     "Machine Learning",
+  ],
+},
+{
+  id: "raahro",
+  name: "Raahro",
+  category: "Desktop Application · Network Tool",
+  description:
+    "A Windows desktop application that turns your PC into a proxy-powered Wi-Fi hotspot, allowing you to share a local SOCKS5 proxy connection with other devices through sing-box and Windows Mobile Hotspot.",
+  url: "https://github.com/PersianNull/Raahro",
+  linkLabel: "View on GitHub",
+  tags: [
+    "WPF",
+    "C#",
+    ".NET",
+    "MVVM",
+    "sing-box",
+    "Proxy",
+    "Hotspot",
   ],
 },
 ];
@@ -237,7 +261,7 @@ const skillProjectMap: Record<string, string[]> = {
   "REST APIs": ["expertcommunicationlab"],
 
   "Windows Forms": [],
-  WPF: [],
+  WPF: ["raahro","anahid"],
   Linux: [],
 };
 
@@ -705,14 +729,25 @@ useEffect(() => {
   };
 }, []);
 
-const activeProjects = displayedSkill
+const allExplorerProjects: Record<string, ExplorerProject> = {
+  ...Object.fromEntries(
+    publicProjects.map((p) => [
+      p.id,
+      { id: p.id, name: p.name, url: p.url, isPublic: true },
+    ])
+  ),
+  ...Object.fromEntries(
+    professionalCaseStudies.map((p) => [
+      p.id,
+      { id: p.id, name: p.name, url: p.url, isPublic: false },
+    ])
+  ),
+};
+
+const activeProjects: ExplorerProject[] = displayedSkill
   ? (skillProjectMap[displayedSkill] ?? [])
-      .map((projectId) =>
-        publicProjects.find((project) => project.id === projectId)
-      )
-      .filter(
-        (project): project is PublicProject => project !== undefined
-      )
+      .map((projectId) => allExplorerProjects[projectId])
+      .filter((project): project is ExplorerProject => project !== undefined)
   : [];
   return (
     <div className="site-shell" id="top">
@@ -1096,42 +1131,64 @@ aria-label={t("hero.avatarStatus")}
 </div>
 
             {activeProjects.length > 0 ? (
-              activeProjects.map((project) => (
-                <a
-                  className="project-folder"
-                  key={project.id}
-                  href={project.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  title={t("skillsPage.openProjectTitle", {
-  name: project.name,
-})}
-                  tabIndex={activeSkill ? 0 : -1}
-                >
-                  <span className="project-folder-icon" aria-hidden="true">
-                    📁
-                  </span>
+  activeProjects.map((project) =>
+    project.url ? (
+      <a
+        className="project-folder"
+        key={project.id}
+        href={project.url}
+        target="_blank"
+        rel="noreferrer"
+        title={t("skillsPage.openProjectTitle", {
+          name: project.name,
+        })}
+        tabIndex={activeSkill ? 0 : -1}
+      >
+        <span className="project-folder-icon" aria-hidden="true">
+          📁
+        </span>
 
-                  <span className="project-folder-name">
-                    {project.name}
-                  </span>
+        <span className="project-folder-name">
+          {project.name}
+        </span>
 
-                  <span className="project-folder-type">
-  {t("skillsPage.linkType")}
-</span>
-                </a>
-              ))
-            ) : (
-              <div className="explorer-empty">
-                <span className="empty-folder-icon" aria-hidden="true">
-                  📂
-                </span>
+        <span className="project-folder-type">
+          {t("skillsPage.linkType")}
+        </span>
+      </a>
+    ) : (
+      <div
+        className="project-folder project-folder--locked"
+        key={project.id}
+        title={t("skillsPage.privateProjectTitle", {
+          name: project.name,
+        })}
+      >
+        <span className="project-folder-icon" aria-hidden="true">
+          🔒
+        </span>
 
-                <strong>{t("skillsPage.noLinkedProject")}</strong>
+        <span className="project-folder-name">
+          {project.name}
+        </span>
 
-                <p>{t("skillsPage.noPublicProject")}</p>
-              </div>
-            )}
+        <span className="project-folder-type">
+          {t("skillsPage.privateType")}
+        </span>
+      </div>
+    )
+  )
+) : (
+  <div className="explorer-empty">
+    <span className="empty-folder-icon" aria-hidden="true">
+      📂
+    </span>
+
+    <strong>{t("skillsPage.noLinkedProject")}</strong>
+
+    <p>{t("skillsPage.noPublicProject")}</p>
+  </div>
+)}
           </div>
         </div>
 
@@ -1342,6 +1399,8 @@ aria-label={t("hero.avatarStatus")}
           {project.id === "haminhomes" && "⌂"}
           {project.id === "expertcommunicationlab" && "</>"}
           {project.id === "visual-annotation-tool" && "⌖"}
+            {project.id === "raahro" && "⇶"}
+
         </div>
 
         <h3>{project.name}</h3>

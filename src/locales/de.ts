@@ -132,6 +132,21 @@ projects: {
         "Maschinelles Lernen",
       ],
     },
+    "raahro": {
+  category: "Desktop-Anwendung · Netzwerk-Tool",
+  description:
+    "Eine Windows-Desktopanwendung, die den PC in einen proxygestützten WLAN-Hotspot verwandelt und eine lokale SOCKS5-Proxyverbindung über sing-box und den Windows Mobile Hotspot mit anderen Geräten teilt.",
+  linkLabel: "Auf GitHub ansehen",
+  tags: [
+    "WPF",
+    "C#",
+    ".NET",
+    "MVVM",
+    "sing-box",
+    "Proxy",
+    "Hotspot",
+  ],
+},
   },
 
 
@@ -307,6 +322,8 @@ educationPage: {
 },
 
 skillsPage: {
+  privateProjectTitle: "{{name}} ist nicht öffentlich verfügbar",
+privateType: "PRIVAT",
   eyebrow: "TECHNISCHE KENNTNISSE",
   title: "Meine",
   titleAccent: "Fähigkeiten.",
